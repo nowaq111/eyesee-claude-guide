@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Team Guide — EyeSee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --es-dark:      #0F0425;
+    --es-light:     #F1E9FF;
+    --es-blue-deep: #000AC7;
+    --es-purple:    #7000E0;
+    --es-crimson:   #6E003A;
+    --es-brand:     #FF144F;
+    --es-pink:      #F275FF;
+    --es-sky:       #36AFFF;
+    --es-green:     #1FAF44;
+    --es-white:     #FFFFFF;
+    --card-bg:      rgba(241,233,255,0.05);
+    --card-border:  rgba(241,233,255,0.1);
+    --glow-purple:  rgba(112,0,224,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--es-dark);
+    color: var(--es-light);
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,4,37,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    display: inline-block;
+    background: var(--es-brand);
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    padding: 6px 16px;
+    border-radius: 50px;
+  }
+  .nav-logo .dot { color: rgba(255,255,255,0.65); }
+  .nav-links { display: flex; gap: 2px; }
+  .nav-links a {
+    color: rgba(241,233,255,0.6);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 50px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--es-light); background: var(--card-bg); }
+  .nav-links a.active { color: var(--es-light); background: var(--card-bg); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 40px 60px;
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(112,0,224,0.2) 0%, transparent 60%);
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid rgba(54,175,255,0.4);
+    color: var(--es-sky);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 5.5vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 span { color: var(--es-brand); }
+  .hero p {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(241,233,255,0.7);
+    max-width: 620px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .tool-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+  }
+  .tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: block;
+  }
+  .tool-card:hover {
+    background: rgba(241,233,255,0.08);
+    border-color: rgba(241,233,255,0.2);
+    transform: translateY(-2px);
+  }
+  .tool-card .icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    font-size: 20px;
+  }
+  .icon-chat { background: rgba(255,20,79,0.15); }
+  .icon-cowork { background: rgba(54,175,255,0.15); }
+  .icon-code { background: rgba(112,0,224,0.15); }
+  .tool-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .tool-card p { font-size: 13px; color: rgba(241,233,255,0.6); line-height: 1.5; }
+  .tool-card .usage-pill {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+  }
+  .pill-red { background: rgba(255,20,79,0.2); color: var(--es-brand); }
+  .pill-blue { background: rgba(54,175,255,0.2); color: var(--es-sky); }
+  .pill-purple { background: rgba(112,0,224,0.2); color: var(--es-pink); }
+
+  /* SECTIONS */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    border-top: 1px solid var(--card-border);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .section-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .num-red { background: var(--es-brand); color: white; }
+  .num-blue { background: var(--es-sky); color: var(--es-dark); }
+  .num-purple { background: var(--es-purple); color: white; }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(241,233,255,0.4);
+    margin-bottom: 4px;
+  }
+  .section h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 900; letter-spacing: -0.02em; }
+  .section > p {
+    font-size: 17px;
+    font-weight: 300;
+    color: rgba(241,233,255,0.7);
+    margin: 12px 0 36px;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+
+  /* USE CASES GRID */
+  .use-cases {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .use-case {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+  .use-case .uc-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .uc-icon { font-size: 18px; }
+  .use-case p { font-size: 14px; color: rgba(241,233,255,0.65); line-height: 1.55; }
+
+  /* PROMPT EXAMPLES */
+  .prompt-section { margin-bottom: 36px; }
+  .prompt-section h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: rgba(241,233,255,0.8);
+  }
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .prompt-card {
+    background: rgba(255,20,79,0.06);
+    border: 1px solid rgba(255,20,79,0.2);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .prompt-card.blue {
+    background: rgba(54,175,255,0.06);
+    border-color: rgba(54,175,255,0.2);
+  }
+  .prompt-card .dept {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--es-brand);
+    margin-bottom: 6px;
+  }
+  .prompt-card.blue .dept { color: var(--es-sky); }
+  .prompt-card .prompt-text {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    color: rgba(241,233,255,0.85);
+    line-height: 1.5;
+  }
+
+  /* TIPS BOX */
+  .tip-box {
+    background: rgba(54,175,255,0.07);
+    border: 1px solid rgba(54,175,255,0.25);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+  }
+  .tip-box h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--es-sky);
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+  }
+  .tip-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tip-list li {
+    font-size: 14px;
+    color: rgba(241,233,255,0.75);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .tip-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--es-sky);
+    font-weight: 700;
+  }
+  .tip-list li strong { color: var(--es-light); font-weight: 700; }
+
+  /* WARNING / NOTE BOX */
+  .note-box {
+    background: rgba(255,20,79,0.06);
+    border: 1px solid rgba(255,20,79,0.2);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: rgba(241,233,255,0.75);
+    line-height: 1.6;
+  }
+  .note-box strong { color: var(--es-brand); }
+
+  /* COWORK STEPS */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(54,175,255,0.15);
+    border: 1px solid rgba(54,175,255,0.3);
+    color: var(--es-sky);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .step-content p { font-size: 14px; color: rgba(241,233,255,0.65); line-height: 1.5; }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 36px;
+    font-size: 14px;
+  }
+  .compare-table th {
+    background: var(--card-bg);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    color: rgba(241,233,255,0.6);
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .compare-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(241,233,255,0.06);
+    vertical-align: top;
+    line-height: 1.5;
+    color: rgba(241,233,255,0.8);
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(241,233,255,0.02); }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 50px;
+  }
+  .badge-chat { background: rgba(255,20,79,0.2); color: var(--es-brand); }
+  .badge-cowork { background: rgba(54,175,255,0.2); color: var(--es-sky); }
+  .badge-both { background: rgba(112,0,224,0.2); color: var(--es-pink); }
+
+  /* CODE SECTION */
+  .code-minimal {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .code-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+  }
+  .code-card .emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+  .code-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .code-card p { font-size: 13px; color: rgba(241,233,255,0.55); line-height: 1.5; }
+
+  /* GOLDEN RULES */
+  .golden-rules {
+    background: linear-gradient(135deg, rgba(112,0,224,0.1), rgba(255,20,79,0.08));
+    border: 1px solid rgba(112,0,224,0.3);
+    border-radius: 18px;
+    padding: 32px;
+    margin-bottom: 36px;
+  }
+  .golden-rules h3 {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .golden-rules h3 span { color: var(--es-brand); }
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .rule {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .rule-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--es-brand);
+    color: white;
+    font-weight: 900;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rule p { font-size: 14px; color: rgba(241,233,255,0.75); line-height: 1.5; }
+  .rule p strong { color: var(--es-light); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--card-border);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  footer p { font-size: 13px; color: rgba(241,233,255,0.4); }
+  footer .es-logo {
+    display: inline-block;
+    background: var(--es-brand);
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 5px 14px;
+    border-radius: 50px;
+  }
+
+  /* DIVIDER */
+  .divider { width: 60px; height: 3px; background: var(--es-brand); border-radius: 2px; margin: 12px 0 28px; }
+  .divider.blue { background: var(--es-sky); }
+  .divider.purple { background: var(--es-purple); }
+
+  /* ELI5 TOGGLE */
+  .eli5-toggle {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(241,233,255,0.07); border: 1px solid rgba(241,233,255,0.15);
+    border-radius: 50px; padding: 5px 12px 5px 8px; cursor: pointer;
+    transition: all 0.2s; flex-shrink: 0; user-select: none;
+  }
+  .eli5-toggle:hover { background: rgba(241,233,255,0.12); border-color: rgba(241,233,255,0.25); }
+  .eli5-toggle.active { background: rgba(255,20,79,0.15); border-color: rgba(255,20,79,0.5); }
+  .eli5-track { width: 30px; height: 16px; background: rgba(241,233,255,0.2); border-radius: 50px; position: relative; transition: background 0.25s; flex-shrink: 0; }
+  .eli5-toggle.active .eli5-track { background: var(--es-brand); }
+  .eli5-dot { width: 12px; height: 12px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: left 0.25s; }
+  .eli5-toggle.active .eli5-dot { left: 16px; }
+  .eli5-label { font-size: 12px; font-weight: 700; color: rgba(241,233,255,0.55); letter-spacing: 0.05em; transition: color 0.2s; }
+  .eli5-toggle.active .eli5-label { color: var(--es-brand); }
+  .eli5-emoji { font-size: 14px; }
+
+  /* ELI5 mode banner */
+  .eli5-banner {
+    display: none; position: sticky; top: 56px; z-index: 99;
+    background: rgba(255,20,79,0.1); border-bottom: 1px solid rgba(255,20,79,0.25);
+    padding: 7px 40px; text-align: center;
+    font-size: 13px; font-weight: 500; color: rgba(255,20,79,0.9);
+    letter-spacing: 0.02em;
+  }
+  body.eli5-mode .eli5-banner { display: block; }
+
+  /* ELI5 text transitions */
+  .eli5-swap { transition: opacity 0.15s; }
+  body.eli5-switching .eli5-swap { opacity: 0; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .hero, .section { padding-left: 20px; padding-right: 20px; }
+    .tool-overview { padding: 0 20px 40px; grid-template-columns: 1fr; }
+    .use-cases, .prompts-grid, .rules-grid, .code-minimal { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">eye<span class="dot">·</span>see</div>
+  <div class="nav-links">
+    <a href="#whatisclaude">What is Claude</a>
+    <a href="#agenticbot">EyeSee Bot</a>
+    <a href="#chat">Chat</a>
+    <a href="#cowork">Cowork</a>
+    <a href="#skills">Skills</a>
+    <a href="#connectors">Connectors</a>
+    <a href="#code">Code</a>
+    <a href="#setup">Setup</a>
+    <a href="#trythis">Try This</a>
+    <a href="#dictionary">Dictionary</a>
+    <a href="#security">Security</a>
+  </div>
+  <div class="eli5-toggle" id="eli5Toggle" onclick="toggleEli5()">
+    <div class="eli5-track"><div class="eli5-dot"></div></div>
+    <span class="eli5-emoji">👶</span>
+    <span class="eli5-label">ELI5</span>
+  </div>
+</nav>
+<div class="eli5-banner">👶 ELI5 mode is on — everything explained like you're 5. Toggle again to go back to normal.</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">EyeSee · Claude Team Plan · 2026</div>
+  <h1>Your practical guide to <span>Claude</span></h1>
+  <p id="hero-sub" class="eli5-swap">Three tools, one AI platform. Here's what each one does, when to use it, and how to get the most out of it — starting today.</p>
+</div>
+
+<!-- TOOL OVERVIEW CARDS -->
+<div style="max-width: 860px; margin: 0 auto; padding: 0 40px 60px;">
+  <a href="#agenticbot" class="tool-card" style="display: flex; align-items: center; gap: 20px; margin-bottom: 12px; border-color: rgba(31,175,68,0.3); background: rgba(31,175,68,0.05);">
+    <div class="icon" style="background: rgba(31,175,68,0.15); font-size: 22px; flex-shrink: 0;">🤖</div>
+    <div style="flex: 1;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--es-green); margin-bottom: 4px;">Start here — EyeSee internal tool</div>
+      <h3 style="font-size: 17px; margin-bottom: 4px;">EyeSee Agentic Bot</h3>
+      <p>Our own AI assistant built on Claude and embedded in the Collab platform. Optimized for EyeSee workflows. Available to all employees — use this first for everyday tasks.</p>
+    </div>
+    <span class="usage-pill" style="background: rgba(31,175,68,0.2); color: var(--es-green); flex-shrink: 0;">For everyone</span>
+  </a>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+    <a href="#chat" class="tool-card">
+      <div class="icon icon-chat">💬</div>
+      <h3>Claude Chat</h3>
+      <p>Web & mobile. Advanced AI assistant for complex analysis, strategic thinking, and polished deliverables.</p>
+      <span class="usage-pill pill-red">Heads of dept</span>
+    </a>
+    <a href="#cowork" class="tool-card">
+      <div class="icon icon-cowork">🖥️</div>
+      <h3>Claude Cowork</h3>
+      <p>Desktop app. Claude operates your browser for multi-step research and web automation tasks.</p>
+      <span class="usage-pill pill-blue">Use when needed</span>
+    </a>
+    <a href="#code" class="tool-card">
+      <div class="icon icon-code">⌨️</div>
+      <h3>Claude Code</h3>
+      <p>Terminal-based coding tool. For R&D and technical teams. Not needed by most heads.</p>
+      <span class="usage-pill pill-purple">R&amp;D only</span>
+    </a>
+  </div>
+</div>
+
+<!-- ───────────── WHAT IS CLAUDE ───────────── -->
+<div class="section" id="whatisclaude" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(112,0,224,0.08) 0%, transparent 70%);">
+  <div class="section-label">Start here</div>
+  <h2 id="h2-whatisclaude" class="eli5-swap" style="font-size: clamp(28px, 4vw, 40px); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 6px;">What is Claude, and why are we using it?</h2>
+  <div class="divider"></div>
+
+  <p id="p-whatisclaude" class="eli5-swap">If you've never used an AI assistant before — or if you've tried one and weren't sure what to do with it — this section is for you.</p>
+
+  <div class="use-case" style="margin-bottom: 16px; border-color: rgba(255,20,79,0.2); background: rgba(255,20,79,0.05);">
+    <div id="whatis-card-title" class="eli5-swap uc-title" style="font-size: 17px;">Claude is a brilliant, patient AI assistant you talk to in plain language.</div>
+    <p id="whatis-card-body" class="eli5-swap" style="font-size: 15px; margin-top: 4px;">You type what you need — a question, a task, a document to analyze — and Claude responds. No special commands, no technical skills required. If you can write an email, you can use Claude.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px;">
+    <div class="use-case" style="text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 10px;">🧠</div>
+      <div class="uc-title" style="justify-content: center; font-size: 14px;">It understands context</div>
+      <p>You can have a back-and-forth conversation. Claude remembers what you said earlier in the same chat and builds on it.</p>
+    </div>
+    <div class="use-case" style="text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 10px;">📎</div>
+      <div class="uc-title" style="justify-content: center; font-size: 14px;">It reads your files</div>
+      <p>Attach a PDF, a Word doc, a spreadsheet, or an image. Claude reads it and works with the content — no copy-pasting needed.</p>
+    </div>
+    <div class="use-case" style="text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 10px;">🌐</div>
+      <div class="uc-title" style="justify-content: center; font-size: 14px;">It searches the web</div>
+      <p>When you need current information, Claude can search online in real time and bring you a synthesized, cited answer.</p>
+    </div>
+  </div>
+
+  <h3 id="h3-google" class="eli5-swap" style="font-size: 19px; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.01em;">What makes it different from a Google search?</h3>
+
+  <table class="compare-table" style="margin-bottom: 32px;">
+    <thead>
+      <tr>
+        <th>Google search</th>
+        <th>Claude</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Returns a list of links — you do the reading</td>
+        <td>Reads the sources and gives you a direct, synthesized answer</td>
+      </tr>
+      <tr>
+        <td>You search for information that already exists</td>
+        <td>Claude creates new content — drafts, analyses, summaries — tailored to your exact situation</td>
+      </tr>
+      <tr>
+        <td>One query, one result</td>
+        <td>A conversation — you refine, ask follow-ups, change direction</td>
+      </tr>
+      <tr>
+        <td>Can't read your documents</td>
+        <td>Works directly with files you provide</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="h3-eyesee" class="eli5-swap" style="font-size: 19px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em;">Why is EyeSee rolling this out now?</h3>
+  <p id="p-eyesee" class="eli5-swap" style="font-size: 16px; font-weight: 300; color: rgba(241,233,255,0.7); margin-bottom: 20px; line-height: 1.7;">EyeSee's work — research, analysis, client communication, proposals, reporting — is exactly the kind of knowledge work where AI creates the most time savings. The goal is not to replace how we work. It's to remove the slow, repetitive parts so each of us can focus on the thinking that actually requires our expertise.</p>
+
+  <div class="golden-rules" style="margin-bottom: 0;">
+    <h3 id="h3-threegreat" class="eli5-swap" style="font-size: 17px; margin-bottom: 16px;">The three things Claude is genuinely <span>great</span> at — at EyeSee</h3>
+    <div class="rules-grid">
+      <div class="rule">
+        <div class="rule-num">1</div>
+        <p><strong>First drafts.</strong> Any document that follows a pattern — reports, emails, proposals, SOPs, summaries — Claude produces a strong starting draft in seconds. You refine it; Claude does the heavy lifting.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num">2</div>
+        <p><strong>Making sense of data and documents.</strong> Drop in a file and ask questions. "What are the key takeaways?" "Which numbers look unusual?" "Summarize this for a non-technical audience." Claude reads it and responds.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num">3</div>
+        <p><strong>Research and synthesis.</strong> Instead of spending an hour reading 10 websites, describe what you need and Claude searches, reads, and delivers a structured summary with sources — in under a minute.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num" style="background: rgba(241,233,255,0.15); color: rgba(241,233,255,0.5);">!</div>
+        <p><strong>One important rule:</strong> Claude can occasionally be wrong — especially on specific facts and numbers. Always review before sending anything to a client or using in a decision. Treat it as a very capable colleague, not an oracle.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 id="h3-howtotalk" class="eli5-swap" style="font-size: 19px; font-weight: 700; margin: 36px 0 14px; letter-spacing: -0.01em;">How to talk to Claude — the only skill you need to learn</h3>
+  <p id="p-howtotalk" class="eli5-swap" style="font-size: 15px; color: rgba(241,233,255,0.7); margin-bottom: 20px; line-height: 1.65;">You don't need to learn special commands or formats. Claude understands plain language. But the way you phrase a request significantly affects the quality of the answer. One principle covers 90% of it: <strong>give context, not just a command.</strong></p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+    <div style="background: rgba(255,20,79,0.06); border: 1px solid rgba(255,20,79,0.2); border-radius: 14px; padding: 18px 20px;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.07em; color: rgba(255,20,79,0.7); margin-bottom: 10px; text-transform: uppercase;">❌ Weak prompt</div>
+      <div style="font-family: 'Roboto Mono', monospace; font-size: 13px; color: rgba(241,233,255,0.7); margin-bottom: 12px; line-height: 1.5;">"Write a follow-up email."</div>
+      <div style="font-size: 13px; color: rgba(241,233,255,0.5); line-height: 1.5;">Claude has no idea who it's to, what it's following up on, what tone you want, or what you need the recipient to do. You'll get a generic template.</div>
+    </div>
+    <div style="background: rgba(31,175,68,0.06); border: 1px solid rgba(31,175,68,0.25); border-radius: 14px; padding: 18px 20px;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-green); margin-bottom: 10px; text-transform: uppercase;">✅ Strong prompt</div>
+      <div style="font-family: 'Roboto Mono', monospace; font-size: 13px; color: rgba(241,233,255,0.85); margin-bottom: 12px; line-height: 1.5;">"Write a short follow-up email to our Belgian client Unilever. We met last Tuesday to discuss a new pack testing project. They haven't responded in 5 days. Tone: warm but nudging. Keep it under 80 words."</div>
+      <div style="font-size: 13px; color: rgba(241,233,255,0.5); line-height: 1.5;">Claude has who, what, why, tone, and length. The output will be immediately usable.</div>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-bottom: 0;">
+    <h4>Six things that make any Claude prompt better</h4>
+    <ul class="tip-list">
+      <li><strong>Say who it's for and why.</strong> "Draft a message to my direct report" hits differently than "Draft a message."</li>
+      <li><strong>Specify the format.</strong> "Give me 3 bullet points" or "Write this as a formal memo" or "Make it a table." Claude defaults to prose otherwise.</li>
+      <li><strong>Give a length target.</strong> "Under 100 words" or "one paragraph" or "a 10-slide outline." Claude tends to over-produce without a limit.</li>
+      <li><strong>Assign a role when useful.</strong> "You are an experienced management consultant" or "Act as a tough editor who cuts ruthlessly." It shifts the register.</li>
+      <li><strong>Attach the actual files.</strong> If you have a document that's relevant — attach it. Don't describe what's in it. Claude reads it directly.</li>
+      <li><strong>Iterate out loud.</strong> If the first output isn't right, say so directly: "Too formal — make it warmer." "Cut the second paragraph." "Add a section on pricing." You're in a conversation.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ───────────── SECTION: EYESEE AGENTIC BOT ───────────── -->
+<div class="section" id="agenticbot">
+  <div class="section-label">Start here · Internal tool</div>
+  <div class="section-header">
+    <div class="section-num" style="background: var(--es-green); color: white; font-size: 22px;">🤖</div>
+    <div>
+      <h2>EyeSee Agentic Bot</h2>
+    </div>
+  </div>
+  <div class="divider" style="background: var(--es-green);"></div>
+  <p id="p-agenticbot" class="eli5-swap">Before opening Claude Chat, check whether the <strong>EyeSee Agentic Bot on Collab</strong> already covers what you need. It's our own internal AI assistant — built on Claude's AI engine and configured specifically for EyeSee's workflows. It's available to all employees, not just the management team.</p>
+
+  <div class="use-case" style="margin-bottom: 24px; border-color: rgba(31,175,68,0.25); background: rgba(31,175,68,0.06);">
+    <div class="uc-title" style="color: var(--es-green); font-size: 16px;">📍 Where to find it</div>
+    <p style="margin-top: 4px; font-size: 15px;">Open the <strong>Collab platform</strong> → main menu → EyeSee Chatbot. Available at all times from any device.</p>
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">What the Agentic Bot can do for you today</h3>
+  <div class="use-cases" style="margin-bottom: 28px;">
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📊</span> EyeSee data file analysis</div>
+      <p>Upload ETL outputs and study data files directly. Ask questions, extract KPIs, get summaries. It understands EyeSee's own data formats — Claude Chat doesn't have that built-in context.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">🏢</span> EyeSee-specific knowledge</div>
+      <p>Ask about our services (Pack testing, Planogram, Retail Media, TVC), methodologies (Eye Tracking, Emotion Recognition, Virtual Shopping), tools, and internal processes. It knows EyeSee.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">✏️</span> Text improvement & proofreading</div>
+      <p>Paste any draft — email, report section, proposal copy. Get it proofread, improved for clarity, or translated. Faster than opening Claude Chat for quick text fixes.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📄</span> Document Q&A and summarizing</div>
+      <p>Upload PDFs, Word docs, Excel files, presentations. Ask questions or get a summary. Supported formats: xlsx, pdf, docx, pptx, png, jpg, and more.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📋</span> Tables and Excel export</div>
+      <p>Ask it to structure data into a table and download the result as an Excel file directly. No copy-pasting into spreadsheets.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">💡</span> General productivity</div>
+      <p>Brainstorm ideas, answer quick business questions, organize information, write structured outlines for proposals or presentations.</p>
+    </div>
+  </div>
+
+  <div class="tip-box" style="border-color: rgba(31,175,68,0.3); background: rgba(31,175,68,0.06); margin-bottom: 20px;">
+    <h4 style="color: var(--es-green);">Bot vs. Claude Chat — which one to open first?</h4>
+    <table class="compare-table" style="margin-bottom: 0;">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Analyze an ETL output or EyeSee study data file</td>
+          <td><span class="badge" style="background: rgba(31,175,68,0.2); color: var(--es-green);">Agentic Bot</span></td>
+        </tr>
+        <tr>
+          <td>Quick question about EyeSee services or methodology</td>
+          <td><span class="badge" style="background: rgba(31,175,68,0.2); color: var(--es-green);">Agentic Bot</span></td>
+        </tr>
+        <tr>
+          <td>Proofread or improve a short text</td>
+          <td><span class="badge" style="background: rgba(31,175,68,0.2); color: var(--es-green);">Agentic Bot</span></td>
+        </tr>
+        <tr>
+          <td>Summarize a document, export structured table to Excel</td>
+          <td><span class="badge" style="background: rgba(31,175,68,0.2); color: var(--es-green);">Agentic Bot</span></td>
+        </tr>
+        <tr>
+          <td>Complex multi-document analysis with deep reasoning</td>
+          <td><span class="badge badge-chat">Claude Chat</span></td>
+        </tr>
+        <tr>
+          <td>Strategic thinking, brainstorming, long iterative work</td>
+          <td><span class="badge badge-chat">Claude Chat</span></td>
+        </tr>
+        <tr>
+          <td>Advanced web research across multiple sources</td>
+          <td><span class="badge badge-chat">Claude Chat</span></td>
+        </tr>
+        <tr>
+          <td>Creating polished client-facing deliverables from scratch</td>
+          <td><span class="badge badge-chat">Claude Chat</span></td>
+        </tr>
+        <tr>
+          <td>Management-level sensitive work (finance, HR, strategy)</td>
+          <td><span class="badge badge-chat">Claude Chat</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box" style="border-color: rgba(31,175,68,0.2);">
+    <strong style="color: var(--es-green);">The logic:</strong> Use the Agentic Bot as your first stop for EyeSee-specific tasks and everyday productivity. Switch to Claude Chat when you need more depth, more nuance, or work that requires broader reasoning and advanced research. Both are powered by the same AI engine — the difference is context and specialization.
+  </div>
+</div>
+
+<!-- ───────────── SECTION 1: CHAT ───────────── -->
+<div class="section" id="chat">
+  <div class="section-label">Tool 01</div>
+  <div class="section-header">
+    <div class="section-num num-red">1</div>
+    <div>
+      <h2>Claude Chat</h2>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <p id="p-chat" class="eli5-swap">Your go-to AI assistant, available at <strong>claude.ai</strong> in any browser and on your phone. Think of it as a brilliant, patient colleague who can read any document, think through any problem, write anything you need, and research anything on the web — in real time.</p>
+
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📄</span> Document drafting</div>
+      <p>Emails, reports, meeting agendas, executive summaries, proposals, SOPs, job descriptions. Give Claude the context and it writes a solid first draft in seconds.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📊</span> Data analysis</div>
+      <p>Paste a table, attach an Excel file or a PDF — Claude reads it, finds patterns, explains what it means, and suggests what to do with it.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">🔍</span> Intelligent web search</div>
+      <p>Enable web search in Claude and ask it to research any company, topic, or competitor. It reads multiple sources and synthesizes a clear, cited answer — not just a list of links.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📝</span> Summarize anything</div>
+      <p>Drop in a long PDF, a research paper, a meeting transcript, a lengthy email thread — Claude gives you the key points in a format you choose.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">🧠</span> Strategic thinking partner</div>
+      <p>Brainstorm solutions, stress-test an idea, prepare for a difficult conversation, structure a presentation argument, or think through a decision you're stuck on.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">✏️</span> Edit and improve text</div>
+      <p>Paste anything you've written and ask Claude to tighten it, change the tone, make it more executive, translate it, or restructure it completely.</p>
+    </div>
+  </div>
+
+  <!-- PROMPT EXAMPLES -->
+  <div class="prompt-section">
+    <h3>Starter prompt examples — per department</h3>
+    <div class="prompts-grid">
+      <div class="prompt-card">
+        <div class="dept">Client Success · Marijana</div>
+        <div class="prompt-text">"Summarize the key insights from this research report in 5 bullets for a CPG client executive. Attach file."</div>
+      </div>
+      <div class="prompt-card">
+        <div class="dept">Sales & Marketing · Johan</div>
+        <div class="prompt-text">"Draft a short, personalized cold email for [brand name] based on this brief. Keep it under 100 words."</div>
+      </div>
+      <div class="prompt-card">
+        <div class="dept">Finance & Legal · Veli</div>
+        <div class="prompt-text">"I'm pasting a table of Q2 department costs. Identify the top 3 anomalies and suggest what might explain them."</div>
+      </div>
+      <div class="prompt-card">
+        <div class="dept">People · Sanja</div>
+        <div class="prompt-text">"Write a job description for a Senior Insights Manager. Core skills: research, client communication, data storytelling."</div>
+      </div>
+      <div class="prompt-card">
+        <div class="dept">Operations · Boki</div>
+        <div class="prompt-text">"Turn these messy meeting notes into a structured action list with owners and deadlines. [paste notes]"</div>
+      </div>
+      <div class="prompt-card">
+        <div class="dept">Growth · Tom</div>
+        <div class="prompt-text">"Research [company name]. Give me a 1-page summary: what they do, size, funding, and whether they compete with or complement EyeSee."</div>
+      </div>
+      <div class="prompt-card">
+        <div class="dept">CEO · Joris</div>
+        <div class="prompt-text">"I need to prepare for a board update on Q3. Here's the data. Help me structure a tight 10-minute narrative."</div>
+      </div>
+      <div class="prompt-card">
+        <div class="dept">Any department</div>
+        <div class="prompt-text">"I have a 1-on-1 with [person] and need to give constructive feedback about [issue]. Help me frame it well."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tip-box">
+    <h4>How to get better results from Claude Chat</h4>
+    <ul class="tip-list">
+      <li><strong>Give context.</strong> Don't just say "write an email." Say who it's to, what the goal is, and what tone you want. The more Claude knows, the better the output.</li>
+      <li><strong>Attach files directly.</strong> Claude can read PDFs, Word docs, images, and data files. Drag and drop them into the chat window.</li>
+      <li><strong>Use Projects.</strong> Create a Project for your team — Claude remembers context across conversations inside it. Add your key documents once and stop re-explaining.</li>
+      <li><strong>Iterate, don't restart.</strong> If the output isn't right, just say "make it shorter," "change the tone to be more direct," or "focus more on X." It's a conversation.</li>
+      <li><strong>Enable web search</strong> in Settings when you need current information — Claude will search and cite sources in real time.</li>
+      <li><strong>Confidentiality.</strong> On the Team plan, your conversations are not used to train Claude's models. You can work with internal data confidently.</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ───────────── SECTION 2: COWORK ───────────── -->
+<div class="section" id="cowork">
+  <div class="section-label">Tool 02</div>
+  <div class="section-header">
+    <div class="section-num num-blue">2</div>
+    <div>
+      <h2>Claude Cowork</h2>
+    </div>
+  </div>
+  <div class="divider blue"></div>
+  <p id="p-cowork" class="eli5-swap">A desktop application that gives Claude control of your computer's browser. While Chat is great for thinking and drafting, Cowork is for <strong>doing</strong> — multi-step tasks that require clicking, browsing, and working across multiple websites simultaneously.</p>
+
+  <div class="use-cases" style="margin-bottom: 24px;">
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">🌐</span> Deep web research</div>
+      <p>Ask Claude to research 10 companies, read their websites, and come back with a structured comparison table. It actually browses each one for you.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📋</span> Multi-source data gathering</div>
+      <p>Pull information from LinkedIn, company databases, or news sources across multiple tabs at once — much faster than doing it manually.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">🗂️</span> File management tasks</div>
+      <p>Rename, sort, and organize files on your desktop according to a rule you define — without writing any code.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📬</span> Repetitive browser tasks</div>
+      <p>Fill in forms, copy data between web tools, or perform the same sequence of web actions you'd normally do by hand — but delegated to Claude.</p>
+    </div>
+  </div>
+
+  <div class="tip-box" style="border-color: rgba(54,175,255,0.25);">
+    <h4>Chat vs. Cowork — when to use which</h4>
+    <table class="compare-table" style="margin-bottom: 0;">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Write a report or email</td>
+          <td><span class="badge badge-chat">Chat</span></td>
+        </tr>
+        <tr>
+          <td>Analyze a file you already have</td>
+          <td><span class="badge badge-chat">Chat</span></td>
+        </tr>
+        <tr>
+          <td>Quick research on a single topic</td>
+          <td><span class="badge badge-chat">Chat</span></td>
+        </tr>
+        <tr>
+          <td>Research across 5+ websites simultaneously</td>
+          <td><span class="badge badge-cowork">Cowork</span></td>
+        </tr>
+        <tr>
+          <td>Gather structured data from multiple sources</td>
+          <td><span class="badge badge-cowork">Cowork</span></td>
+        </tr>
+        <tr>
+          <td>Automate repetitive browser actions</td>
+          <td><span class="badge badge-cowork">Cowork</span></td>
+        </tr>
+        <tr>
+          <td>Summarize + research in one flow</td>
+          <td><span class="badge badge-both">Both</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="steps">
+    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 4px; color: rgba(241,233,255,0.8);">Getting started with Cowork</h3>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Download the desktop app</h4>
+        <p>Download Claude Cowork from claude.ai or the Anthropic website. It runs on Mac and Windows.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Log in with your EyeSee Team account</h4>
+        <p>Use the same credentials as Claude Chat — your Team plan covers Cowork access.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Describe the task in plain language</h4>
+        <p>Type what you want done: "Go to these 8 LinkedIn company pages and collect their employee count and HQ location into a table." Claude takes it from there.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Watch and supervise</h4>
+        <p>Claude works through the task in front of you. You can pause it, correct it, or give it new instructions at any point — you stay in control.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Note:</strong> Cowork is still in beta and works best for well-defined tasks. For ambiguous or very complex flows, start with Chat to plan the task, then hand it to Cowork for execution. Always review the output before using it.
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin: 32px 0 16px;">Cowork Plugins — connect your tools</h3>
+  <p style="font-size: 15px; color: rgba(241,233,255,0.7); margin-bottom: 20px; line-height: 1.6;">Cowork supports plugins that let Claude work directly with the tools you already use. Once connected, Claude can read from and act within these platforms as part of any task you give it — no switching tabs, no manual copy-pasting between apps.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px;">
+    <div class="use-case" style="padding: 16px 18px;">
+      <div class="uc-title" style="font-size: 14px;"><span class="uc-icon">📁</span> SharePoint & OneDrive</div>
+      <p style="font-size: 13px;">Claude reads files directly from your SharePoint sites and OneDrive. Summarize a doc, extract data from a file, compare documents — without downloading anything to your desktop.</p>
+    </div>
+    <div class="use-case" style="padding: 16px 18px;">
+      <div class="uc-title" style="font-size: 14px;"><span class="uc-icon">📧</span> Outlook & Teams</div>
+      <p style="font-size: 13px;">Claude reads email threads from Outlook and messages from Teams channels. Understand project status, extract client feedback, summarize meeting notes — without leaving the conversation.</p>
+    </div>
+    <div class="use-case" style="padding: 16px 18px;">
+      <div class="uc-title" style="font-size: 14px;"><span class="uc-icon">💬</span> Slack</div>
+      <p style="font-size: 13px;">Claude searches Slack channels and threads. Summarize a long discussion, extract decisions, draft a response with full channel context — or invoke @Claude directly inside Slack.</p>
+    </div>
+    <div class="use-case" style="padding: 16px 18px;">
+      <div class="uc-title" style="font-size: 14px;"><span class="uc-icon">💼</span> Salesforce</div>
+      <p style="font-size: 13px;">Claude reads CRM data — pipeline status, client history, deal notes. Johan's team can draft client communications with live Salesforce context already loaded into the conversation.</p>
+    </div>
+    <div class="use-case" style="padding: 16px 18px;">
+      <div class="uc-title" style="font-size: 14px;"><span class="uc-icon">🎨</span> Figma & Miro</div>
+      <p style="font-size: 13px;">Claude reads design files in Figma and boards in Miro, generates diagrams, and helps translate visual work into structured written content.</p>
+    </div>
+    <div class="use-case" style="padding: 16px 18px;">
+      <div class="uc-title" style="font-size: 14px;"><span class="uc-icon">📊</span> Gamma</div>
+      <p style="font-size: 13px;">Claude creates and edits Gamma presentations directly. Give it a brief and it generates a full slide deck — without leaving the conversation.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <h4>Example multi-tool Cowork task</h4>
+    <ul class="tip-list">
+      <li>"Go to the [project] folder in Google Drive, read the brief doc, then check my Calendar for any upcoming client meetings about this project, and draft a status update email based on what you find."</li>
+      <li>"Search our Slack channel #sales for any discussions about [client name] in the last 2 weeks and summarize the key points and open questions."</li>
+      <li>"Read the attached research brief, create a 10-slide Gamma presentation summarizing the methodology and key findings."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ───────────── SECTION: SKILLS ───────────── -->
+<div class="section" id="skills">
+  <div class="section-label">Power feature · Claude Cowork</div>
+  <div class="section-header">
+    <div class="section-num" style="background: var(--es-pink); color: var(--es-dark); font-size: 18px;">✦</div>
+    <div>
+      <h2>Skills</h2>
+    </div>
+  </div>
+  <div class="divider" style="background: var(--es-pink);"></div>
+  <p id="p-skills" class="eli5-swap">Skills are the most powerful — and least known — feature in Claude. Once set up, they eliminate the need to re-explain the same task over and over. You just work, and Claude automatically knows what to do and how.</p>
+
+  <div class="use-case" style="margin-bottom: 20px; border-color: rgba(242,117,255,0.2); background: rgba(242,117,255,0.05);">
+    <div class="uc-title" style="color: var(--es-pink); font-size: 16px;">The core idea</div>
+    <p style="margin-top: 6px; font-size: 15px; line-height: 1.65;">A Skill is a <strong>SKILL.md file</strong> — a structured text file containing instructions for a specific task or workflow. You install it into Claude once. After that, Claude reads it automatically whenever you're doing that type of task. <strong>You don't invoke a Skill. It invokes itself.</strong> Claude recognizes what you're working on and activates the right Skill on its own.</p>
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Skills vs. regular prompts vs. Projects</h3>
+  <table class="compare-table" style="margin-bottom: 28px;">
+    <thead>
+      <tr><th>Approach</th><th>How it works</th><th>Limitation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Long prompt</strong></td>
+        <td>You write all the context and instructions every time you start a task</td>
+        <td>You repeat yourself constantly. Exhausting.</td>
+      </tr>
+      <tr>
+        <td><strong>Uploaded file</strong></td>
+        <td>You keep instructions in a doc and attach it to conversations</td>
+        <td>You have to remember to attach it and say "read this first" every time</td>
+      </tr>
+      <tr>
+        <td><strong>Project</strong></td>
+        <td>Instructions and docs are pre-loaded in a specific Project workspace</td>
+        <td>You have to open the right Project. Context is fixed per Project.</td>
+      </tr>
+      <tr>
+        <td style="color: var(--es-pink);"><strong>Skill ✦</strong></td>
+        <td>A SKILL.md file installed in Claude. Fires automatically when the task matches.</td>
+        <td style="color: rgba(241,233,255,0.45);">Needs initial setup. Description quality matters.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">What a Skill contains</h3>
+  <div class="use-cases" style="margin-bottom: 28px;">
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">🎯</span> A trigger description</div>
+      <p>Tells Claude when to activate this Skill. Example: "Use when the user asks to write a client report or summarize research findings." Also defines when NOT to use it.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">📋</span> Step-by-step instructions</div>
+      <p>The full workflow for the task: what format to use, what sections to always include, what tone to adopt, what to check before finishing. The more specific, the better.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">⚡</span> Slash command (optional)</div>
+      <p>You can also call any Skill manually by typing a command like <strong>/report</strong> or <strong>/proposal</strong>. Useful when you want to force it rather than wait for auto-detection.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title"><span class="uc-icon">🔗</span> Stacks with everything else</div>
+      <p>Skills work on top of Projects and uploaded files. Your Skill handles the process. Your Project documents provide the context. They fire together, simultaneously.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">Suggested EyeSee Skills — by department</h3>
+  <p style="font-size: 14px; color: rgba(241,233,255,0.6); margin-bottom: 16px; line-height: 1.55;">These are Skills worth building first. Each one captures a repeated workflow that someone at EyeSee does regularly — and currently re-explains from scratch every time.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 28px;">
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">Client Success · /insight-summary</div>
+      <div class="prompt-text">Converts raw research findings into a structured client-ready executive summary — always in EyeSee's report format: headline finding, 3 key insights, implications, recommended actions.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">Client Success · /client-update</div>
+      <div class="prompt-text">Drafts a professional project status email to a client — always includes progress summary, open items, next steps, and timeline. Warm but structured tone.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">Sales & Marketing · /proposal-draft</div>
+      <div class="prompt-text">Turns a sales brief into a structured EyeSee proposal — methodology, timeline, added value, pricing logic. Pulls from EyeSee service descriptions automatically.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">Sales & Marketing · /linkedin-post</div>
+      <div class="prompt-text">Writes a LinkedIn post in EyeSee's thought-leadership voice — insight-led, no fluff, ends with a clear point of view. Auto-activates when you mention a LinkedIn post or social content.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">Growth · /company-brief</div>
+      <div class="prompt-text">Researches a company and outputs a structured one-pager: what they do, size, funding, key products, and a fit score against EyeSee's M&A criteria. Designed for Tom's pipeline.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">Operations · /meeting-to-actions</div>
+      <div class="prompt-text">Takes messy meeting notes and converts them into a clean action list: decisions made, tasks with owners and deadlines, open questions. Always the same format.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">People · /job-description</div>
+      <div class="prompt-text">Writes a JD in EyeSee's tone and structure — role summary, responsibilities, requirements, what we offer. Always consistent across departments, no blank-page starts.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">Finance · /financial-memo</div>
+      <div class="prompt-text">Formats a cost or budget analysis into a concise management memo — key numbers, what changed vs. plan, likely causes, recommended response. Ready for Joris or the board.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">All departments · /weekly-update</div>
+      <div class="prompt-text">Converts a brain dump of what happened this week into a structured team update — what was completed, what's in progress, blockers, next week's priorities. Same format every time.</div>
+    </div>
+    <div class="prompt-card" style="border-color: rgba(255,20,79,0.3);">
+      <div class="dept">All departments · /meeting-prep</div>
+      <div class="prompt-text">Given a meeting topic or agenda, generates a prep brief — key questions to ask, context to review, talking points, likely objections. Auto-fires when you mention preparing for a meeting.</div>
+    </div>
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Two ways to create a Skill</h3>
+  <div class="use-cases" style="margin-bottom: 28px;">
+    <div class="use-case" style="border-color: rgba(242,117,255,0.2);">
+      <div class="uc-title"><span class="uc-icon">🛠️</span> Option A — Claude's Skill Creator (recommended)</div>
+      <p>Open Claude Cowork → type <strong>"Use the skill-creator to help me build a skill for [your task]."</strong> Claude interviews you, generates the SKILL.md file, and runs an evaluation to test it before you install. Takes about 15 minutes for your first skill.</p>
+    </div>
+    <div class="use-case" style="border-color: rgba(242,117,255,0.2);">
+      <div class="uc-title"><span class="uc-icon">⚡</span> Option B — makemyskill.com (faster)</div>
+      <p>Go to <strong>makemyskill.com</strong> → describe the task in a paragraph → it searches the web and writes the Skill for you. Faster, less control. Good for simpler Skills or if you want to skip the interview. Download and upload to Claude.</p>
+    </div>
+  </div>
+
+  <div class="steps">
+    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 10px; color: rgba(241,233,255,0.8);">How to install a Skill</h3>
+    <div class="step">
+      <div class="step-num" style="background: rgba(242,117,255,0.15); border-color: rgba(242,117,255,0.3); color: var(--es-pink);">1</div>
+      <div class="step-content">
+        <h4>Create or download the SKILL.md file</h4>
+        <p>Use the Skill Creator in Cowork, makemyskill.com, or browse Anthropic's pre-built Skills inside Cowork → Customize → Personal Plugins → Browse.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(242,117,255,0.15); border-color: rgba(242,117,255,0.3); color: var(--es-pink);">2</div>
+      <div class="step-content">
+        <h4>Install it: Settings → Capabilities → Skills → Upload</h4>
+        <p>In Claude → left menu → Customize → Skills → the "+" button → Upload a skill. The SKILL.md file goes in a named folder.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(242,117,255,0.15); border-color: rgba(242,117,255,0.3); color: var(--es-pink);">3</div>
+      <div class="step-content">
+        <h4>Test it with 5 different phrasings</h4>
+        <p>Type requests that should trigger the Skill. Then try unrelated requests to make sure it stays quiet when it shouldn't fire. If something is off, ask Claude: <em>"When would you use this skill?"</em> — it quotes the trigger description back to you so you can fix it.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(242,117,255,0.15); border-color: rgba(242,117,255,0.3); color: var(--es-pink);">4</div>
+      <div class="step-content">
+        <h4>Share with your team</h4>
+        <p>Skills can be shared. Once a head of department has a working Skill, it can be distributed to the whole team — everyone gets the same consistent workflow with no individual setup.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box" style="border-color: rgba(242,117,255,0.25); background: rgba(242,117,255,0.05);">
+    <h4 style="color: var(--es-pink);">Two things that make the difference between a good Skill and a useless one</h4>
+    <ul class="tip-list">
+      <li><strong>"Do NOT use for…" matters more than "Use when…"</strong> A Skill with no negative triggers will hijack conversations it shouldn't. Always define what the Skill is NOT for, as specifically as what it IS for.</li>
+      <li><strong>Specificity beats length.</strong> "I write reports" is useless. "I write weekly client reports that always start with the headline finding, use 3 insight sections, and end with next steps as bullet points" is a Skill that works the first time.</li>
+    </ul>
+  </div>
+
+  <div class="note-box" style="border-color: rgba(242,117,255,0.2); margin-top: 16px;">
+    <strong style="color: var(--es-pink);">Ask Novak:</strong> R&D can build and distribute EyeSee-branded Skills to the whole team — pre-configured with our terminology, format standards, and workflows. You don't have to build them yourself. Tell Novak which repeated task is costing your team the most time.
+  </div>
+</div>
+
+<!-- ───────────── SECTION: CONNECTORS & MCP ───────────── -->
+<div class="section" id="connectors">
+  <div class="section-label">Integrations · All tools</div>
+  <div class="section-header">
+    <div class="section-num" style="background: var(--es-sky); color: var(--es-dark); font-size: 18px;">⚡</div>
+    <div>
+      <h2>Connectors &amp; MCP</h2>
+    </div>
+  </div>
+  <div class="divider blue"></div>
+  <p id="p-connectors" class="eli5-swap">Connectors let Claude reach directly into the tools you already use — reading files, pulling data, and taking actions — without you copying and pasting anything. Powered by an open standard called <strong>MCP (Model Context Protocol)</strong>, they work across Claude Chat, Cowork, and Claude Code.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;">
+    <div class="use-case" style="text-align: center; border-color: rgba(54,175,255,0.2);">
+      <div style="font-size: 28px; margin-bottom: 8px;">🔌</div>
+      <div class="uc-title" style="justify-content: center; font-size: 14px;">What MCP is</div>
+      <p style="font-size: 13px;">A universal plug standard. Instead of uploading files, Claude gets live, secure access to your tools. It reads what's there right now — not a copy from last week.</p>
+    </div>
+    <div class="use-case" style="text-align: center; border-color: rgba(54,175,255,0.2);">
+      <div style="font-size: 28px; margin-bottom: 8px;">🔐</div>
+      <div class="uc-title" style="justify-content: center; font-size: 14px;">Your permissions, respected</div>
+      <p style="font-size: 13px;">Claude inherits your existing access rights. If you can't see a file in SharePoint, Claude can't either. No new permissions are granted — it works within your existing security model.</p>
+    </div>
+    <div class="use-case" style="text-align: center; border-color: rgba(54,175,255,0.2);">
+      <div style="font-size: 28px; margin-bottom: 8px;">🆓</div>
+      <div class="uc-title" style="justify-content: center; font-size: 14px;">Free to add</div>
+      <p style="font-size: 13px;">All connectors are free. One-time setup, then they're available in every conversation. Browse the full library at <strong>claude.com/connectors</strong>.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">EyeSee-relevant connectors — what's available now</h3>
+
+  <div class="use-cases" style="margin-bottom: 12px;">
+    <div class="use-case" style="border-color: rgba(0,10,199,0.4); background: rgba(0,10,199,0.06);">
+      <div class="uc-title" style="color: var(--es-sky);">🪟 Microsoft 365 — the big one</div>
+      <p style="margin-bottom: 10px;">Official Anthropic-built connector. Gives Claude access to <strong>SharePoint, OneDrive, Outlook, and Teams</strong> using your existing Microsoft permissions. Available now on Team plan.</p>
+      <table class="compare-table" style="margin-bottom: 0; font-size: 13px;">
+        <thead><tr><th>Tool</th><th>What Claude can do</th></tr></thead>
+        <tbody>
+          <tr><td><strong>SharePoint</strong></td><td>Search and analyze documents across all sites — project specs, strategy docs, templates — without manual upload</td></tr>
+          <tr><td><strong>OneDrive</strong></td><td>Read and summarize personal or shared files. Ask Claude to find, compare, or extract data from any file</td></tr>
+          <tr><td><strong>Outlook</strong></td><td>Read email threads, understand client communication patterns, draft replies with full context loaded</td></tr>
+          <tr><td><strong>Teams</strong></td><td>Search chat messages and meeting notes, surface decisions from channels, catch up on discussions</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top: 12px; padding: 10px 14px; background: rgba(54,175,255,0.08); border-radius: 8px; font-size: 13px; color: rgba(241,233,255,0.7);">
+        <strong style="color: var(--es-sky);">Setup note:</strong> Requires a Microsoft Entra ID Global Admin + Claude Team Owner to enable for the organization. IT needs to approve it once — then all users can connect individually. Anthropic is Microsoft-verified. Claude only retrieves data on-demand and never caches file content.
+      </div>
+    </div>
+
+    <div class="use-case" style="border-color: rgba(255,20,79,0.2);">
+      <div class="uc-title"><span style="font-size: 18px;">💬</span> Slack</div>
+      <p style="margin-bottom: 10px;">Connect Claude to your Slack workspace. Claude can search messages across channels, summarize long threads, extract decisions and action items, and draft channel updates. Also available as a standalone <strong>Claude for Slack</strong> app — invoke @Claude directly inside any Slack channel.</p>
+      <div style="font-size: 13px; color: rgba(241,233,255,0.6);">
+        <strong style="color: rgba(241,233,255,0.8);">Good for:</strong> Catching up on project channels, extracting what was decided in a thread, drafting a Slack message with full conversation context, summarizing a week of #client-name discussion before a meeting.
+      </div>
+    </div>
+  </div>
+
+  <div class="use-cases" style="margin-bottom: 28px;">
+    <div class="use-case" style="border-color: rgba(255,20,79,0.2);">
+      <div class="uc-title"><span style="font-size: 18px;">💼</span> Salesforce</div>
+      <p style="margin-bottom: 10px;">Salesforce and Anthropic have an expanding partnership. Claude can already access Salesforce data via the <strong>Slack connector</strong> (Salesforce owns Slack). A direct Salesforce connector is confirmed and in development.</p>
+      <div style="font-size: 13px; color: rgba(241,233,255,0.6);">
+        <strong style="color: rgba(241,233,255,0.8);">Today via Slack:</strong> Johan's team can invoke Claude in Slack and pull Salesforce CRM context — pipeline data, deal status, client history — while drafting outreach or updating proposals. <br><br>
+        <strong style="color: rgba(241,233,255,0.8);">Coming soon:</strong> Direct Salesforce connector with access to Agentforce, Data 360 — bringing full CRM workflow into Claude.
+      </div>
+    </div>
+
+    <div class="use-case" style="border-color: rgba(112,0,224,0.2); background: rgba(112,0,224,0.04);">
+      <div class="uc-title" style="color: var(--es-pink);"><span style="font-size: 18px;">📊</span> Power BI</div>
+      <p style="margin-bottom: 10px;">No native Claude connector yet. But there are two practical workarounds available today:</p>
+      <div style="font-size: 13px; color: rgba(241,233,255,0.7); display: flex; flex-direction: column; gap: 8px;">
+        <div style="padding: 10px 12px; background: rgba(112,0,224,0.08); border-radius: 8px;"><strong style="color: var(--es-pink);">Option 1 — Export &amp; paste:</strong> Export a Power BI table or chart data to Excel/CSV, attach to Claude Chat. Claude analyzes it and answers questions. Works today, no setup needed.</div>
+        <div style="padding: 10px 12px; background: rgba(112,0,224,0.08); border-radius: 8px;"><strong style="color: var(--es-pink);">Option 2 — CData Connect AI:</strong> Third-party MCP connector that bridges Power BI data to Claude in real-time. Requires IT setup. More advanced, but enables live querying. Ask Novak.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 8px;">Microsoft Office add-ins — Claude inside your apps</h3>
+  <p style="font-size: 14px; color: rgba(241,233,255,0.65); margin-bottom: 16px; line-height: 1.55;">Separate from connectors — these bring Claude directly inside the Microsoft apps you already work in. No browser tab switching.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px;">
+    <div class="use-case" style="padding: 16px 18px; border-color: rgba(0,10,199,0.25); background: rgba(0,10,199,0.05);">
+      <div class="uc-title" style="font-size: 14px; color: var(--es-sky);">📗 Claude for Excel</div>
+      <p style="font-size: 13px;">Claude lives in a sidebar inside Excel. Analyze data, write formulas, create charts, clean messy tables, explain what a formula does — right next to your spreadsheet. Available via Microsoft AppSource.</p>
+    </div>
+    <div class="use-case" style="padding: 16px 18px; border-color: rgba(0,10,199,0.25); background: rgba(0,10,199,0.05);">
+      <div class="uc-title" style="font-size: 14px; color: var(--es-sky);">📘 Claude for Word</div>
+      <p style="font-size: 13px;">Claude writes, edits, and improves documents directly inside Word. Draft a section, rewrite a paragraph, tighten the language — without leaving the document you're working in.</p>
+    </div>
+    <div class="use-case" style="padding: 16px 18px; border-color: rgba(0,10,199,0.25); background: rgba(0,10,199,0.05);">
+      <div class="uc-title" style="font-size: 14px; color: var(--es-sky);">📙 Claude for PowerPoint</div>
+      <p style="font-size: 13px;">Claude creates and edits slides inside PowerPoint. Give it a brief and it generates content, rewrites speaker notes, and restructures slide flow — in your existing presentation.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size: 17px; font-weight: 700; margin-bottom: 16px;">Real-world EyeSee workflows with connectors</h3>
+  <div class="tip-box">
+    <h4>Multi-connector tasks — what becomes possible</h4>
+    <ul class="tip-list">
+      <li><strong>Before a client meeting (Marijana):</strong> "Search my Outlook for emails from [client] in the last month. Search Teams for any discussion about their project. Give me a 1-page brief on where we stand and what they care about."</li>
+      <li><strong>Proposal prep (Johan):</strong> "Check Salesforce for [company's] deal history and open opportunities. Find the last proposal we sent them in SharePoint. Draft an updated version based on what's changed."</li>
+      <li><strong>Weekly catch-up (any head):</strong> "Summarize the key decisions and action items from #rd-team and #ops-general in Slack this week. What needs my attention?"</li>
+      <li><strong>Financial review (Veli):</strong> "Read the Q2 budget file in OneDrive. Compare it against the Q1 actuals doc. Identify the 3 biggest variances and suggest what might explain them."</li>
+      <li><strong>M&A research (Tom):</strong> "Search SharePoint for any previous analysis we've done on [company]. Search my Outlook for any emails mentioning them. Then search the web for their latest news and give me a combined brief."</li>
+    </ul>
+  </div>
+
+  <div class="steps" style="margin-top: 24px;">
+    <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 10px; color: rgba(241,233,255,0.8);">How to add a connector — 2 minutes</h3>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">1</div>
+      <div class="step-content">
+        <h4>Open Claude → Settings → Connectors → Browse</h4>
+        <p>Or click the "+" button in the bottom-left corner of any Claude Chat window. Browse by category or search by tool name.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">2</div>
+      <div class="step-content">
+        <h4>Click Connect and authorize via your existing account</h4>
+        <p>Authentication uses your existing login (Microsoft, Slack, Salesforce). Claude never sees your password — it uses OAuth, the same standard as "Sign in with Microsoft" buttons.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">3</div>
+      <div class="step-content">
+        <h4>Start using it immediately — no further setup</h4>
+        <p>Once connected, Claude can access that tool in any conversation. Just mention it naturally: "Check my Outlook for…" or "Search SharePoint for…" and Claude will use the connector automatically.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">!</div>
+      <div class="step-content">
+        <h4>Microsoft 365 requires IT approval first</h4>
+        <p>The M365 connector needs a one-time org-level setup by a Microsoft Entra ID Global Admin. Once IT enables it at the organization level, individual users can connect in seconds. Raise it with Novak to coordinate with IT.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────── SECTION 3: CODE ───────────── -->
+<div class="section" id="code">
+  <div class="section-label">Tool 03</div>
+  <div class="section-header">
+    <div class="section-num num-purple">3</div>
+    <div>
+      <h2>Claude Code</h2>
+    </div>
+  </div>
+  <div class="divider purple"></div>
+  <p id="p-code" class="eli5-swap">A terminal-based tool that lets Claude write, run, and debug code directly on your computer. Designed for developers and technical users. <strong>As a head of department, you don't need this</strong> — but it's worth knowing it exists and when to ask R&D to use it for you.</p>
+
+  <div class="code-minimal">
+    <div class="code-card">
+      <span class="emoji">👩‍💻</span>
+      <h4>Who it's for</h4>
+      <p>Developers, data scientists, and engineers. R&D uses it daily for building tools and automations.</p>
+    </div>
+    <div class="code-card">
+      <span class="emoji">🔧</span>
+      <h4>What it does</h4>
+      <p>Writes full programs, scripts, and automation tools. Reads and modifies files. Connects to APIs and databases.</p>
+    </div>
+    <div class="code-card">
+      <span class="emoji">🤝</span>
+      <h4>What this means for you</h4>
+      <p>If you need a custom tool built — data processor, report automation, scraper — ask Novak. Claude Code is how it gets built.</p>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>When to flag something to R&D:</strong> If you find yourself doing the same repetitive task in Chat every week — formatting data, generating a standard report, extracting info from files — that's a candidate for a proper automated tool. Tell Novak. It's faster to build than you think.
+  </div>
+</div>
+
+<!-- ───────────── GOLDEN RULES ───────────── -->
+<div class="section" id="golden" style="border-top: 1px solid var(--card-border); padding-bottom: 20px;">
+  <div class="golden-rules">
+    <h3>The <span>Golden Rules</span> of using Claude at EyeSee</h3>
+    <div class="rules-grid">
+      <div class="rule">
+        <div class="rule-num">1</div>
+        <p><strong>Give context, not just commands.</strong> "Write an email" is weak. "Write an email to our Belgian client declining a timeline extension, professionally but warmly" is powerful.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num">2</div>
+        <p><strong>Treat it like a first draft machine.</strong> Claude's output is a strong starting point, not a final product. Read it, edit it, make it yours.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num">3</div>
+        <p><strong>Attach the actual files.</strong> Don't describe what's in a document — attach it. Claude reads PDFs, Excel files, Word docs, and images directly.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num">4</div>
+        <p><strong>Build a Project for your team.</strong> Add your key reference docs once. Claude will use them in every conversation inside that project automatically.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num">5</div>
+        <p><strong>It can be wrong. Especially on facts and numbers.</strong> Always verify specific data, figures, and external claims — especially in client-facing outputs.</p>
+      </div>
+      <div class="rule">
+        <div class="rule-num">6</div>
+        <p><strong>Your data is private.</strong> Team plan conversations are not used to train Claude. You can work with internal and client data. Don't share passwords or payment data.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <h4>Stuck? Try these conversation openers</h4>
+    <ul class="tip-list">
+      <li>"I need to write X for Y audience. Here's the context: [paste]. Give me a first draft."</li>
+      <li>"Here's a file. Summarize the key points in bullet form, then suggest 3 follow-up actions."</li>
+      <li>"I'm preparing for a meeting on [topic]. What questions should I be ready to answer?"</li>
+      <li>"Here's a rough outline. Turn it into a structured document with clear sections and headings."</li>
+      <li>"I need to explain [complex topic] to someone non-technical. Make it simple and clear."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ───────────── SECTION 5: SECURITY ───────────── -->
+<div class="section" id="security">
+  <div class="section-label">Data &amp; Privacy</div>
+  <div class="section-header">
+    <div class="section-num" style="background: var(--es-green); color: white;">🔒</div>
+    <div>
+      <h2>Is your data safe?</h2>
+    </div>
+  </div>
+  <div class="divider" style="background: var(--es-green);"></div>
+  <p id="p-security" class="eli5-swap">A common question when rolling out any AI tool. The short answer for EyeSee's Team plan: <strong>yes</strong>. Here's exactly what Anthropic's official policy says and what it means in practice.</p>
+
+  <div class="tip-box" style="border-color: rgba(31,175,68,0.35); background: rgba(31,175,68,0.07); margin-bottom: 20px;">
+    <h4 style="color: var(--es-green);">Official Anthropic policy — Team plan (Commercial Terms)</h4>
+    <ul class="tip-list">
+      <li style="--tip-color: var(--es-green);"><strong>No training on your data.</strong> Anthropic does not use your prompts, files, or conversations to train AI models. This is guaranteed under the Commercial Terms of Service that covers the Team plan.</li>
+      <li><strong>No selling your data.</strong> Anthropic does not sell user data to third parties. This applies to all plans including Team.</li>
+      <li><strong>30-day data retention.</strong> Anthropic retains conversation data on their servers for 30 days, after which it is deleted. You can delete individual conversations at any time.</li>
+      <li><strong>The training opt-in only applies to consumer plans.</strong> The 2025 policy change that allows data training only affects Free, Pro, and Max individual accounts — it explicitly excludes Team and Enterprise plans.</li>
+    </ul>
+  </div>
+
+  <div class="use-cases" style="margin-bottom: 24px;">
+    <div class="use-case">
+      <div class="uc-title" style="color: var(--es-green);">✅ Safe to use</div>
+      <p>Financial reports, budget analyses, cost tables, internal strategy documents, HR materials (job descriptions, onboarding docs, policy drafts), M&A research notes, client research summaries, competitive briefs.</p>
+    </div>
+    <div class="use-case">
+      <div class="uc-title" style="color: #f5c842;">⚠️ Apply judgment</div>
+      <p>Individual employee personal data (salaries, health info, addresses) — not because Claude trains on it, but as general data hygiene. Client PII or data covered by client contracts — check whether those contracts permit sharing with AI tools.</p>
+    </div>
+  </div>
+
+  <div class="note-box" style="border-color: rgba(112,0,224,0.3); background: rgba(112,0,224,0.07);">
+    <strong style="color: var(--es-pink);">If you ever need zero retention (Enterprise):</strong> Anthropic offers a Zero Data Retention (ZDR) option on the Enterprise tier — where conversation data is never stored on Anthropic's servers at all. This is relevant if EyeSee starts handling highly regulated client data at scale or needs to meet specific compliance requirements. Ask Novak if this becomes relevant.
+  </div>
+
+  <div class="tip-box" style="margin-top: 8px;">
+    <h4>Three rules to follow regardless</h4>
+    <ul class="tip-list">
+      <li><strong>Never paste passwords, API keys, or payment credentials</strong> into any AI tool — this is a universal rule, not Claude-specific.</li>
+      <li><strong>Check client contracts</strong> before sharing client-specific raw data — some enterprise agreements have restrictions on third-party AI processing.</li>
+      <li><strong>Don't share individual employee personal data</strong> (salaries, performance reviews, medical info) unless it's anonymized or aggregated.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ───────────── INITIAL SETUP ───────────── -->
+<div class="section" id="setup">
+  <div class="section-label">Do this first</div>
+  <div class="section-header">
+    <div class="section-num" style="background: var(--es-sky); color: var(--es-dark);">🚀</div>
+    <div><h2>Initial Setup</h2></div>
+  </div>
+  <div class="divider blue"></div>
+  <p id="p-setup" class="eli5-swap">Before you start using Claude for real work, spend 30 minutes setting it up properly. This is the difference between Claude feeling like a generic chatbot and feeling like a tool that actually knows you and your work.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">1</div>
+      <div class="step-content">
+        <h4>Create your about-me.md — your context file</h4>
+        <p>A markdown text file that tells Claude who you are, what you do, and how you like to work. Load it into a Project once. Claude reads it before every conversation, so you never re-explain yourself. Include: your role at EyeSee, your team, the types of work you do most, your communication style preferences, and anything Claude should always know (e.g. "I work with FMCG clients" or "I prefer concise, direct language"). 1–2 paragraphs is enough to start.</p>
+        <div style="margin-top: 10px; padding: 12px 14px; background: rgba(54,175,255,0.07); border-radius: 10px; font-family: 'Roboto Mono', monospace; font-size: 12.5px; color: rgba(241,233,255,0.8); line-height: 1.6;">
+          I am [Name], Head of [Dept] at EyeSee — a behavioral market research company based in Antwerp. My team of [X] people handles [core function]. I work primarily with [clients / stakeholders]. I prefer responses that are direct and concise. When drafting communications, always use a professional but warm tone. My most common tasks are [list 3-4 things].
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">2</div>
+      <div class="step-content">
+        <h4>Create a Project for your team and load your about-me.md</h4>
+        <p>Claude Chat → left sidebar → Projects → New Project. Name it (e.g. "Client Success — EyeSee"). Add your about-me.md as a Project file. Add any reference documents your team uses regularly (templates, service descriptions, process docs). Share with your direct team. Every conversation inside the Project inherits all of this context automatically.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">3</div>
+      <div class="step-content">
+        <h4>Connect Microsoft 365</h4>
+        <p>Settings → Connectors → Microsoft 365 → Connect. Authorize via your EyeSee Microsoft account. This gives Claude access to SharePoint, OneDrive, Outlook, and Teams — so you can ask it to read files or emails directly instead of uploading them manually. <em>Note: requires IT approval first at the org level — coordinate with Novak.</em></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">4</div>
+      <div class="step-content">
+        <h4>Connect Slack</h4>
+        <p>Settings → Connectors → Slack → Connect. Once connected, Claude can search your channels, summarize discussions, and draft messages with full conversation context. Also install the Claude for Slack app so you can invoke @Claude directly inside channels.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">5</div>
+      <div class="step-content">
+        <h4>Switch to Opus 4.6 + Extended Thinking for complex work</h4>
+        <p>In any Claude Chat conversation, click the model selector (top of the chat) → Opus 4.6. Then enable Extended Thinking. This is Claude's most powerful mode — it reasons step by step before answering. Use it for strategic analysis, complex decisions, or anything where you need Claude to think deeply rather than respond quickly. Keep Sonnet (default) for everyday drafting and quick tasks.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background: rgba(54,175,255,0.15); border-color: rgba(54,175,255,0.3); color: var(--es-sky);">6</div>
+      <div class="step-content">
+        <h4>Build or install your first Skill</h4>
+        <p>Open Claude Cowork → type "Use the skill-creator to help me build a skill for [your most repeated task]." Answer the interview. Install the SKILL.md file. Now that workflow runs automatically whenever Claude recognizes the task. Start with the one thing you do most often — meeting notes to action items, or weekly updates, or client email drafts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box" style="margin-top: 8px;">
+    <strong>Time investment:</strong> About-me.md takes 10 minutes. Project setup takes 10 minutes. Connectors take 2 minutes each. First Skill takes 15–20 minutes. Total: under an hour. Return: you save that time every single week.
+  </div>
+</div>
+
+<!-- ───────────── 5 THINGS TO TRY ───────────── -->
+<div class="section" id="trythis">
+  <div class="section-label">Your first week</div>
+  <div class="section-header">
+    <div class="section-num" style="background: var(--es-brand); color: white;">✓</div>
+    <div><h2>5 things to try this week</h2></div>
+  </div>
+  <div class="divider"></div>
+  <p id="p-trythis" class="eli5-swap">If you're not sure where to start, try these five. Each one is useful on its own and teaches you something about how Claude works.</p>
+
+  <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px;">
+
+    <div style="display: flex; gap: 16px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px 22px;">
+      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--es-brand); color: white; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+      <div>
+        <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Summarize your last messy meeting</h4>
+        <p style="font-size: 14px; color: rgba(241,233,255,0.7); line-height: 1.55; margin-bottom: 8px;">Copy your last set of meeting notes — however rough — and paste them into Claude. Say: <em>"Extract all decisions made and action items with owners. Format as a clean summary I can send to the team."</em></p>
+        <div style="font-size: 12px; font-weight: 700; color: var(--es-brand);">What you'll learn: Claude turns raw input into structured output instantly. This alone saves 20 minutes per meeting.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 16px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px 22px;">
+      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--es-brand); color: white; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+      <div>
+        <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Get a first draft of something you write often</h4>
+        <p style="font-size: 14px; color: rgba(241,233,255,0.7); line-height: 1.55; margin-bottom: 8px;">Think of one type of document you write repeatedly — a project update, a client email, a weekly report. Give Claude the context and ask for a draft. Then say what's wrong with it and ask for a revised version.</p>
+        <div style="font-size: 12px; font-weight: 700; color: var(--es-brand);">What you'll learn: Claude's first draft + one correction cycle is faster than writing from scratch. Every time.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 16px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px 22px;">
+      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--es-brand); color: white; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+      <div>
+        <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Research a company or competitor in 2 minutes</h4>
+        <p style="font-size: 14px; color: rgba(241,233,255,0.7); line-height: 1.55; margin-bottom: 8px;">Enable web search in Claude settings, then ask: <em>"Research [company name]. Give me a 1-page summary: what they do, size, key products, recent news, and whether they compete with or complement EyeSee."</em> Compare to how long a manual Google search would take.</p>
+        <div style="font-size: 12px; font-weight: 700; color: var(--es-brand);">What you'll learn: Claude doesn't just find links — it reads, synthesizes, and gives you a structured answer with sources.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 16px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px 22px;">
+      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--es-brand); color: white; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+      <div>
+        <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Attach a document and have a conversation with it</h4>
+        <p style="font-size: 14px; color: rgba(241,233,255,0.7); line-height: 1.55; margin-bottom: 8px;">Attach any PDF, Word doc, or Excel file you've been meaning to read. Ask: <em>"What are the 5 most important points?"</em> Then follow up: <em>"What would you recommend we do based on this?"</em> Then: <em>"Are there any risks or gaps not addressed here?"</em></p>
+        <div style="font-size: 12px; font-weight: 700; color: var(--es-brand);">What you'll learn: Claude reads and reasons about your files. You can interrogate a document like a colleague who's read it thoroughly.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 16px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px 22px;">
+      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--es-brand); color: white; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+      <div>
+        <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Use Extended Thinking on a real strategic question</h4>
+        <p style="font-size: 14px; color: rgba(241,233,255,0.7); line-height: 1.55; margin-bottom: 8px;">Switch to Opus 4.6, enable Extended Thinking, then ask something genuinely complex: a decision you're wrestling with, a strategy question, a problem with competing priorities. Give it full context. Watch it think through the problem before answering — the output will surprise you.</p>
+        <div style="font-size: 12px; font-weight: 700; color: var(--es-brand);">What you'll learn: This is not autocomplete. Opus 4.6 with Extended Thinking reasons like a senior advisor. Use it for the hard problems.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ───────────── CLAUDE DICTIONARY ───────────── -->
+<div class="section" id="dictionary">
+  <div class="section-label">Reference</div>
+  <div class="section-header">
+    <div class="section-num" style="background: var(--es-purple); color: white; font-size: 18px;">📖</div>
+    <div><h2>Claude Dictionary</h2></div>
+  </div>
+  <div class="divider purple"></div>
+  <p id="p-dictionary" class="eli5-swap">Every term you'll encounter in Claude, explained in plain language. No technical background needed.</p>
+
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+    <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 50px; background: rgba(255,20,79,0.15); color: var(--es-brand);">● Core Products</span>
+    <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 50px; background: rgba(54,175,255,0.15); color: var(--es-sky);">● Features</span>
+    <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 50px; background: rgba(112,0,224,0.2); color: var(--es-pink);">● Files &amp; Config</span>
+    <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 50px; background: rgba(31,175,68,0.15); color: var(--es-green);">● Concepts</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px;">
+
+    <!-- CORE PRODUCTS -->
+    <div style="background: rgba(255,20,79,0.05); border: 1px solid rgba(255,20,79,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-brand); margin-bottom: 8px; text-transform: uppercase;">Core Product</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Claude Chat</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">The web and mobile interface at claude.ai. Your main AI assistant. Best for drafting, analysis, research, and strategic thinking. Where you'll spend most of your time.</p>
+    </div>
+
+    <div style="background: rgba(255,20,79,0.05); border: 1px solid rgba(255,20,79,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-brand); margin-bottom: 8px; text-transform: uppercase;">Core Product</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Claude Cowork</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Desktop app where Claude operates your computer and browser. Think of it as Claude with hands — it browses websites, reads your files, and executes multi-step tasks while you watch.</p>
+    </div>
+
+    <div style="background: rgba(255,20,79,0.05); border: 1px solid rgba(255,20,79,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-brand); margin-bottom: 8px; text-transform: uppercase;">Core Product</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Claude Code</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Terminal-based tool for writing and running code. Used by R&D developers. Not for heads of department — but it's how R&D builds the tools you request.</p>
+    </div>
+
+    <!-- FEATURES -->
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Projects</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">A workspace inside Claude Chat where you load instructions and documents once. Every conversation inside the Project starts with that context already active. Shareable with your team.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Extended Thinking</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">A mode where Claude reasons step-by-step before answering. Slower, but significantly smarter on complex problems. Always pair it with Opus 4.6 — the combination is Claude at its best.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Connectors</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Integrations that give Claude live access to your tools (M365, Slack, Salesforce). Claude reads directly from those systems in real time — no file uploads needed. Powered by MCP.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Skills</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">SKILL.md files that encode a workflow and install it into Claude. They fire automatically when Claude recognizes the task — no command needed. Think: trained reflexes for repeated work.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Plugins</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Pre-built bundles of Skills + Connectors packaged for a specific job function (e.g. Financial Analysis, HR, Sales). Connectors = download from the App Store. Plugins = upload your own app.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Skill Creator</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Claude's built-in tool for building Skills. Open Cowork, ask it to "use the skill-creator", answer its interview, and it generates a ready-to-install SKILL.md file. No technical knowledge needed.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Scheduled Tasks</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Set Claude to run a task automatically at a chosen frequency — daily, weekly, whenever. Pick the task, set the schedule, Claude runs it while your computer is on. Good for recurring reports or summaries.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Claude Computer</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Claude's ability to click, browse, and operate your desktop while you're away. Available inside Cowork. Tell it what to do; it executes — opening tabs, filling forms, navigating sites autonomously.</p>
+    </div>
+
+    <div style="background: rgba(54,175,255,0.05); border: 1px solid rgba(54,175,255,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-sky); margin-bottom: 8px; text-transform: uppercase;">Feature</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Scoped Memory</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Memory that lives inside a specific Project. You say "build on last week's report" and Claude knows what that is — but only inside that Project. Conversations outside don't share this memory.</p>
+    </div>
+
+    <!-- FILES & CONFIG -->
+    <div style="background: rgba(112,0,224,0.06); border: 1px solid rgba(112,0,224,0.22); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-pink); margin-bottom: 8px; text-transform: uppercase;">Files &amp; Config</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">SKILL.md</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">The file inside every Skill folder. Contains: the trigger description (when to use it), the /command name, and the step-by-step instructions for the task. One file = one installed capability.</p>
+    </div>
+
+    <div style="background: rgba(112,0,224,0.06); border: 1px solid rgba(112,0,224,0.22); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-pink); margin-bottom: 8px; text-transform: uppercase;">Files &amp; Config</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">about-me.md</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">A markdown file describing who you are, what you do, and how you work. Load it into your Project once. Claude reads it before every conversation — so you never re-explain your role or preferences. One file is worth 50 repeated prompts.</p>
+    </div>
+
+    <div style="background: rgba(112,0,224,0.06); border: 1px solid rgba(112,0,224,0.22); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-pink); margin-bottom: 8px; text-transform: uppercase;">Files &amp; Config</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Context Files</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Any document you upload to a Project as background knowledge — templates, guidelines, service descriptions, process docs. The more relevant context you give Claude, the less prompting you need each time.</p>
+    </div>
+
+    <div style="background: rgba(112,0,224,0.06); border: 1px solid rgba(112,0,224,0.22); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-pink); margin-bottom: 8px; text-transform: uppercase;">Files &amp; Config</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Global Instructions</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">A persistent prompt that Cowork reads before every single task — across all sessions. Set it once, it runs forever. Use it for standing rules: preferred formats, tone, always-on context about you or your company.</p>
+    </div>
+
+    <!-- CONCEPTS -->
+    <div style="background: rgba(31,175,68,0.05); border: 1px solid rgba(31,175,68,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-green); margin-bottom: 8px; text-transform: uppercase;">Concept</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Opus 4.6</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Claude's most powerful model. Slower and uses more of your plan's capacity — but significantly smarter on hard problems. Always use it with Extended Thinking for complex, high-stakes tasks.</p>
+    </div>
+
+    <div style="background: rgba(31,175,68,0.05); border: 1px solid rgba(31,175,68,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-green); margin-bottom: 8px; text-transform: uppercase;">Concept</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Negative Triggers</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">The "Do NOT use for…" lines in a Skill's description. More important than the positive triggers — they prevent your Skill from activating in conversations it shouldn't touch. Always define them.</p>
+    </div>
+
+    <div style="background: rgba(31,175,68,0.05); border: 1px solid rgba(31,175,68,0.2); border-radius: 13px; padding: 16px 18px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.07em; color: var(--es-green); margin-bottom: 8px; text-transform: uppercase;">Concept</div>
+      <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">MCP</h4>
+      <p style="font-size: 13px; color: rgba(241,233,255,0.65); line-height: 1.55;">Model Context Protocol. The open standard Anthropic built to connect Claude to external tools. Think of it as a universal plug — any app that supports MCP can be connected to Claude. Powers all Connectors.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>EyeSee · Claude Team Guide · 2026 · Internal use only</p>
+  <span class="es-logo">eye<span style="opacity:0.65">·</span>see</span>
+</footer>
+
+<script>
+  // ── ELI5 TOGGLE ──────────────────────────────────────────────
+  const eli5Map = {
+    'hero-sub': 'We have some really cool AI tools at EyeSee. This guide tells you what each one is and how to start using them — today.',
+
+    'h2-whatisclaude': 'What is Claude? 🤔 (Super Simple Version)',
+    'p-whatisclaude': "Never talked to an AI before? That's totally fine! We'll start from the very beginning.",
+    'whatis-card-title': 'Claude is like a really smart friend you can text with any time.',
+    'whatis-card-body': 'You type what you need and Claude helps you. That\'s it. You don\'t need to know anything special. If you can write a text message, you can use Claude.',
+    'h3-google': 'What\'s different about Claude vs just Googling something?',
+    'h3-eyesee': 'Why are we using it at EyeSee?',
+    'p-eyesee': 'We do a lot of writing, reading, and figuring things out. Claude helps with all of that — really fast. So we can spend our brain on the important stuff instead of the boring parts.',
+    'h3-threegreat': 'The 3 things Claude is <span style="color:var(--es-brand)">really, really good at</span> — for EyeSee',
+    'h3-howtotalk': 'How to ask Claude for things — the only trick you need 🗣️',
+    'p-howtotalk': 'You don\'t need to learn anything special. Just type what you want. But here\'s the secret: the more you explain, the better Claude does. Like ordering food — the more you describe what you want, the more you get exactly that.',
+
+    'p-agenticbot': 'Before you open Claude, try our own EyeSee helper first. It lives on the Collab website and already knows everything about EyeSee. Use it for everyday work stuff.',
+
+    'p-chat': 'Claude Chat is the website (claude.ai) where you type things and Claude helps you. It\'s like WhatsApp, but instead of chatting with a friend, you\'re getting work done.',
+    'p-cowork': 'Cowork is like having Claude sit at your computer and do things for you. It clicks buttons, opens websites, reads your files — all while you watch. Like a real assistant next to you.',
+    'p-skills': 'Skills are tricks you teach Claude once. After that, Claude does them automatically — without you ever explaining again. Like a new colleague who never forgets anything you teach them.',
+    'p-connectors': 'Connectors give Claude a key to your work apps — like Outlook and SharePoint. Instead of you sending files to Claude, Claude just goes and reads them itself.',
+    'p-code': 'Claude Code is for writing computer programs. Most people at EyeSee don\'t need this at all. If you want a tool built, just ask Novak — the R&D team uses Claude Code to build it for you.',
+    'p-security': 'People always ask this first — and it\'s a fair question! Is it safe to put work stuff into Claude?',
+    'p-setup': 'Before you start, take 30 minutes to set Claude up properly. It\'s like setting up a new phone — a little effort now makes everything way better.',
+    'p-trythis': 'Not sure where to start? Try these 5 things. Each one takes about 5 minutes and will show you something useful.',
+    'p-dictionary': 'All the special Claude words, explained really simply. No tech stuff, we promise. 🙂',
+  };
+
+  const originals = {};
+  let eli5Active = false;
+
+  function toggleEli5() {
+    const toggle = document.getElementById('eli5Toggle');
+    eli5Active = !eli5Active;
+    toggle.classList.toggle('active', eli5Active);
+    document.body.classList.toggle('eli5-mode', eli5Active);
+
+    // Fade out
+    document.body.classList.add('eli5-switching');
+
+    setTimeout(() => {
+      document.querySelectorAll('.eli5-swap').forEach(el => {
+        const id = el.id;
+        if (!id) return;
+
+        if (eli5Active) {
+          // Cache original and swap to ELI5
+          if (!originals[id]) originals[id] = el.innerHTML;
+          if (eli5Map[id] !== undefined) el.innerHTML = eli5Map[id];
+        } else {
+          // Restore original
+          if (originals[id] !== undefined) el.innerHTML = originals[id];
+        }
+      });
+
+      // Fade back in
+      document.body.classList.remove('eli5-switching');
+    }, 150);
+  }
+
+  // ── NAV ACTIVE STATE ─────────────────────────────────────────
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
